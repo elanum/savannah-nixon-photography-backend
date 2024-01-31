@@ -1,1 +1,0 @@
-# savannah-nixon-photography-backend
