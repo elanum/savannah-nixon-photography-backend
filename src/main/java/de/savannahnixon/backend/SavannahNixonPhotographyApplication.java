@@ -1,5 +1,6 @@
 package de.savannahnixon.backend;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,11 @@ public class SavannahNixonPhotographyApplication {
 		System.setProperty("spring.datasource.password", dotenv.get("DATABASE_PASSWORD"));
 
 		SpringApplication.run(SavannahNixonPhotographyApplication.class, args);
+	}
+
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
 	}
 
 	@Bean

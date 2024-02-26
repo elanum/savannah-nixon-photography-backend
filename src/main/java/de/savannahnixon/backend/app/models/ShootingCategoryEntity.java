@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,8 +20,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "shooting_categories")
 public class ShootingCategoryEntity extends BaseEntity {
-
   @Column(nullable = false)
   private String title;
 
@@ -29,6 +30,9 @@ public class ShootingCategoryEntity extends BaseEntity {
 
   @Column(nullable = true)
   private String info;
+
+  @Column(nullable = false, unique = true)
+  private String slug;
 
   @JsonManagedReference
   @OneToMany(mappedBy = "shootingCategory")
