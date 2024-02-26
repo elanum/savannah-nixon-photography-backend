@@ -3,9 +3,11 @@ package de.savannahnixon.backend.app.controllers;
 import static de.savannahnixon.backend.app.OpenApiDefinition.SHOOTING_CATEGORIES;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +48,18 @@ public class ShootingCategoryController {
   @ResponseBody
   public ShootingCategoryDto addShootingCategory(
       @RequestBody @NonNull final ShootingCategoryCreateDto data) {
-    final ShootingCategoryEntity shootingCategory = modelMapper.map(data, ShootingCategoryEntity.class);
+    modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+    ShootingCategoryEntity shootingCategory = modelMapper.map(data, ShootingCategoryEntity.class);
+
+    if (data.getParentCategoryId() != null) {
+      final Optional<ShootingCategoryEntity> parentCategory = shootingCategoryRepository
+          .findById(data.getParentCategoryId());
+
+      if (parentCategory.isPresent()) {
+        shootingCategory.setParentCategory(parentCategory.get());
+      }
+    }
+
     final ShootingCategoryEntity response = shootingCategoryRepository.save(shootingCategory);
 
     return modelMapper.map(response, ShootingCategoryDto.class);

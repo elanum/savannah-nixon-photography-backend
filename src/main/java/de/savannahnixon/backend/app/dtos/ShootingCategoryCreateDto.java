@@ -11,10 +11,17 @@ public class ShootingCategoryCreateDto {
   @NotNull
   private String title;
 
+  @Schema(description = "Slug of the shooting category", nullable = false)
+  @NotNull
+  private String slug;
+
   @Schema(description = "Description of the shooting category", nullable = false)
   @NotNull
   private String description;
 
   @Schema(description = "Additional information about the shooting category")
   private String info;
+
+  @Schema(description = "Parent category of the shooting category")
+  private Integer parentCategoryId;
 }

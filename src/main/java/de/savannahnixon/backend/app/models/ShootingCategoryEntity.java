@@ -2,10 +2,12 @@ package de.savannahnixon.backend.app.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -37,4 +39,12 @@ public class ShootingCategoryEntity extends BaseEntity {
   @JsonManagedReference
   @OneToMany(mappedBy = "shootingCategory")
   private List<ShootingPackageEntity> shootingPackages;
+
+  @JsonManagedReference
+  @OneToMany(mappedBy = "parentCategory")
+  private List<ShootingCategoryEntity> shootingCategories;
+
+  @JsonBackReference
+  @ManyToOne
+  private ShootingCategoryEntity parentCategory;
 }
