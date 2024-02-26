@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.savannahnixon.backend.app.models.ShootingPackage;
+import de.savannahnixon.backend.app.models.ShootingPackageEntity;
 import de.savannahnixon.backend.app.repositories.ShootingPackageRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,14 +32,15 @@ public class ShootingPackageController {
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   @GetMapping
-  public List<ShootingPackage> getAllShootingPackages() {
-    List<ShootingPackage> shootingPackages = new ArrayList<ShootingPackage>();
+  public List<ShootingPackageEntity> getAllShootingPackages() {
+    List<ShootingPackageEntity> shootingPackages = new ArrayList<ShootingPackageEntity>();
     shootingPackageRepository.findAll().forEach(shootingPackages::add);
     return shootingPackages;
   }
 
   @PostMapping
-  public @ResponseBody ShootingPackage addShootingPackage(@RequestBody @NonNull ShootingPackage shootingPackage) {
+  public @ResponseBody ShootingPackageEntity addShootingPackage(
+      @RequestBody @NonNull ShootingPackageEntity shootingPackage) {
     return shootingPackageRepository.save(shootingPackage);
   }
 }

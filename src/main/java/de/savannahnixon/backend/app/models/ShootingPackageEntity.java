@@ -2,27 +2,24 @@ package de.savannahnixon.backend.app.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Entity
 @Data
-public class ShootingPackage {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
-
-  public Integer getId() {
-    return id;
-  }
-
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+public class ShootingPackageEntity extends BaseEntity {
   @Column(nullable = false)
   private String title;
 
@@ -36,8 +33,7 @@ public class ShootingPackage {
   private String info;
 
   @JsonBackReference
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "shooting_category_id")
-  @Schema(hidden = true)
-  private ShootingCategory shootingCategory;
+  private ShootingCategoryEntity shootingCategory;
 }

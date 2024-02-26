@@ -2,6 +2,8 @@ package de.savannahnixon.backend.app.controllers;
 
 import static de.savannahnixon.backend.app.OpenApiDefinition.SHOOTING_CATEGORIES;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
@@ -14,7 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import de.savannahnixon.backend.app.models.ShootingCategory;
+import de.savannahnixon.backend.app.dtos.ShootingCategoryDto;
+import de.savannahnixon.backend.app.models.ShootingCategoryEntity;
 import de.savannahnixon.backend.app.repositories.ShootingCategoryRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -26,18 +29,23 @@ public class ShootingCategoryController {
   private ShootingCategoryRepository shootingCategoryRepository;
 
   @GetMapping
-  public @ResponseBody Iterable<ShootingCategory> getAllShootingCategories() {
-    return shootingCategoryRepository.findAll();
+  @ResponseBody
+  public List<ShootingCategoryDto> getAllShootingCategories() {
+    Iterable<ShootingCategoryEntity> shootingCategoryEntity = shootingCategoryRepository.findAll();
+
   }
 
   @PostMapping
-  public @ResponseBody ShootingCategory addShootingCategory(
-      @RequestBody @NonNull final ShootingCategory shootingCategory) {
+  @ResponseBody
+  public ShootingCategoryEntity addShootingCategory(
+      @RequestBody @NonNull final ShootingCategoryEntity shootingCategory) {
     return shootingCategoryRepository.save(shootingCategory);
   }
 
   @GetMapping("/{id}")
-  public @ResponseBody ShootingCategory getShootingCategoryById(@PathVariable(value = "id") @NonNull final Integer id) {
+  @ResponseBody
+  public ShootingCategoryEntity getShootingCategoryById(
+      @PathVariable(value = "id") @NonNull final Integer id) {
     return shootingCategoryRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No foundi"));
   }

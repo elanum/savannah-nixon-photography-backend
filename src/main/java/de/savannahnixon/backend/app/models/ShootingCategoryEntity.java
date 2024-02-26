@@ -6,25 +6,25 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Entity
 @Data
-public class ShootingCategory {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+public class ShootingCategoryEntity extends BaseEntity {
 
-  public Integer getId() {
-    return id;
-  }
-
+  @Column(nullable = false)
   private String title;
 
+  @Column(nullable = false)
   private String description;
 
   @Column(nullable = true)
@@ -32,5 +32,5 @@ public class ShootingCategory {
 
   @JsonManagedReference
   @OneToMany(mappedBy = "shootingCategory")
-  private List<ShootingPackage> shootingPackages;
+  private List<ShootingPackageEntity> shootingPackages;
 }
