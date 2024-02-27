@@ -3,15 +3,15 @@ package de.savannahnixon.backend.app.models;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,26 +25,21 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "shooting_packages")
-public class ShootingPackageEntity extends BaseEntity {
+@Table(name = "shooting_package_services")
+public class ShootingPackageServiceEntity extends BaseEntity {
   @Column(nullable = false)
   private String title;
 
   @Column(nullable = false)
-  private String slug;
+  private Float price;
 
-  @Column(nullable = false)
-  private String description;
-
-  @Column(nullable = true)
-  private String info;
-
-  @JsonManagedReference
-  @OneToMany(mappedBy = "shootingPackage", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<ShootingPackageServiceEntity> services;
+  @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+  @CollectionTable(name = "shooting_package_service_info", joinColumns = @JoinColumn(name = "shooting_package_service_id"))
+  @Column(name = "info", nullable = false)
+  private List<String> info;
 
   @JsonBackReference
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "shooting_category_id")
-  private ShootingCategoryEntity shootingCategory;
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "shooting_package_id")
+  private ShootingPackageEntity shootingPackage;
 }

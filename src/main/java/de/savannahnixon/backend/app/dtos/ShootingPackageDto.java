@@ -1,5 +1,7 @@
 package de.savannahnixon.backend.app.dtos;
 
+import java.util.List;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -27,6 +29,10 @@ public class ShootingPackageDto extends BaseDto {
 
   @Schema(description = "Additional information about the shooting package")
   private String info;
+
+  @Schema(description = "List of services", defaultValue = "[]", nullable = false)
+  @NotNull
+  private List<ShootingPackageServiceDto> services;
 
   @Schema(hidden = true)
   private ShootingCategoryDto shootingCategory;

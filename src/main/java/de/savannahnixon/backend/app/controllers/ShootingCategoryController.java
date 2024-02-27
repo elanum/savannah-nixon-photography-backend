@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,6 +64,14 @@ public class ShootingCategoryController {
     final ShootingCategoryEntity response = shootingCategoryRepository.save(shootingCategory);
 
     return modelMapper.map(response, ShootingCategoryDto.class);
+  }
+
+  @DeleteMapping("/{id}")
+  @ResponseBody
+  public String deleteShootingCategoryById(@PathVariable(value = "id") final String id) {
+    shootingCategoryRepository.deleteById(id);
+
+    return "Shooting category with id " + id + " has been deleted";
   }
 
   @GetMapping("/{slug}")

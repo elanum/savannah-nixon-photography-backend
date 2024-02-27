@@ -22,8 +22,8 @@ import lombok.experimental.SuperBuilder;
 @MappedSuperclass
 public abstract class BaseEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private String id;
 
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
