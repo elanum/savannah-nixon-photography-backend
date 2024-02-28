@@ -33,7 +33,7 @@ public class ShootingPackageEntity extends BaseEntity {
   @Column(nullable = false)
   private String slug;
 
-  @Column(nullable = false)
+  @Column(nullable = false, columnDefinition = "TEXT")
   private String description;
 
   @Column(nullable = true)

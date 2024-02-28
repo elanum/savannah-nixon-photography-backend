@@ -1,23 +1,17 @@
 package de.savannahnixon.backend.app.dtos;
 
-import java.util.List;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 @Schema
-public class ShootingPackageServiceDto {
+public class ShootingPackageServiceInfoDto {
   @Schema(nullable = false)
   @NotNull
-  private String title;
+  private String info;
 
   @Schema(nullable = false)
   @NotNull
-  private Float price;
-
-  @Schema(nullable = false)
-  @NotNull
-  private List<ShootingPackageServiceInfoDto> info;
+  private Integer info_order;
 }

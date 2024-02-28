@@ -33,10 +33,9 @@ public class ShootingPackageServiceEntity extends BaseEntity {
   @Column(nullable = false)
   private Float price;
 
-  @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+  @ElementCollection(targetClass = ShootingPackageServiceInfoEntity.class, fetch = FetchType.EAGER)
   @CollectionTable(name = "shooting_package_service_info", joinColumns = @JoinColumn(name = "shooting_package_service_id"))
-  @Column(name = "info", nullable = false)
-  private List<String> info;
+  private List<ShootingPackageServiceInfoEntity> info;
 
   @JsonBackReference
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

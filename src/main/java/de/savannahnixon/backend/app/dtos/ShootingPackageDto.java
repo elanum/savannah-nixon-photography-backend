@@ -2,6 +2,8 @@ package de.savannahnixon.backend.app.dtos;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -35,5 +37,6 @@ public class ShootingPackageDto extends BaseDto {
   private List<ShootingPackageServiceDto> services;
 
   @Schema(hidden = true)
+  @JsonIgnore
   private ShootingCategoryDto shootingCategory;
 }

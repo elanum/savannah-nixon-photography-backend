@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,12 +38,16 @@ public class ShootingCategoryController {
 
   @GetMapping
   @ResponseBody
-  public List<ShootingCategoryDto> getAllShootingCategories() {
-    final List<ShootingCategoryEntity> shootingCategoryEntity = shootingCategoryRepository.findAll();
+  public ResponseEntity<List<ShootingCategoryDto>> getAllShootingCategories() {
+    try {
+      final List<ShootingCategoryEntity> shootingCategoryEntity = shootingCategoryRepository.findAll();
 
-    return shootingCategoryEntity.stream()
-        .map(shootingCategory -> modelMapper.map(shootingCategory, ShootingCategoryDto.class))
-        .collect(Collectors.toList());
+      return ResponseEntity.ok().body(shootingCategoryEntity.stream()
+          .map(shootingCategory -> modelMapper.map(shootingCategory, ShootingCategoryDto.class))
+          .collect(Collectors.toList()));
+    } catch (Exception e) {
+      return ResponseEntity.internalServerError().build();
+    }
   }
 
   @PostMapping

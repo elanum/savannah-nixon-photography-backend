@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,7 +53,8 @@ public class ShootingPackageController {
   }
 
   @PostMapping
-  public @ResponseBody ShootingPackageDto addShootingPackage(
+  @ResponseBody
+  public ShootingPackageDto addShootingPackage(
       @RequestBody ShootingPackageCreateDto data) {
     modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
     ShootingPackageEntity shootingPackage = modelMapper.map(data, ShootingPackageEntity.class);
@@ -72,6 +74,22 @@ public class ShootingPackageController {
     shootingPackageRepository.deleteById(id);
 
     return "Shooting package with id " + id + " has been deleted";
+  }
+
+  @PutMapping("/{id}")
+  @ResponseBody
+  public ShootingPackageDto updateShootingPackage(@PathVariable(value = "id") final String id,
+      @RequestBody ShootingPackageCreateDto data) {
+    modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+    ShootingPackageEntity shootingPackage = modelMapper.map(data, ShootingPackageEntity.class);
+
+    for (ShootingPackageServiceEntity service : shootingPackage.getServices()) {
+      service.setShootingPackage(shootingPackage);
+    }
+
+    ShootingPackageEntity response = shootingPackageRepository.save(shootingPackage);
+
+    return modelMapper.map(response, ShootingPackageDto.class);
   }
 
   @GetMapping("/{slug}")
