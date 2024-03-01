@@ -32,6 +32,10 @@ public class ShootingPackageDto extends BaseDto {
   @Schema(description = "Additional information about the shooting package")
   private String info;
 
+  @Schema(description = "Is the shooting package disabled", defaultValue = "false", nullable = false)
+  @NotNull
+  private Boolean disabled;
+
   @Schema(description = "List of services", defaultValue = "[]", nullable = false)
   @NotNull
   private List<ShootingPackageServiceDto> services;
@@ -39,4 +43,8 @@ public class ShootingPackageDto extends BaseDto {
   @Schema(hidden = true)
   @JsonIgnore
   private ShootingCategoryDto shootingCategory;
+
+  @Schema(description = "List of images", defaultValue = "[]", nullable = false)
+  @NotNull
+  private List<ImageDto> images;
 }

@@ -1,6 +1,6 @@
 package de.savannahnixon.backend.app.controllers;
 
-import static de.savannahnixon.backend.app.OpenApiDefinition.SHOOTING_PACKAGES;
+import static de.savannahnixon.backend.app.configs.OpenApiDefinition.SHOOTING_PACKAGES;
 
 import java.util.List;
 import java.util.Optional;

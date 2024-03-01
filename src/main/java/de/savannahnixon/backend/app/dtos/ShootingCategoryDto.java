@@ -39,4 +39,8 @@ public class ShootingCategoryDto extends BaseDto {
   @Schema(description = "List of sub categories", defaultValue = "[]", nullable = false)
   @NotNull
   private List<ShootingCategoryDto> shootingCategories;
+
+  @Schema(nullable = false)
+  @NotNull
+  private ImageDto image;
 }

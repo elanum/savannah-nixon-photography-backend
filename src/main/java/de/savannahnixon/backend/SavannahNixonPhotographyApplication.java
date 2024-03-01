@@ -19,6 +19,7 @@ public class SavannahNixonPhotographyApplication {
 		System.setProperty("spring.datasource.url", dotenv.get("DATABASE_URL"));
 		System.setProperty("spring.datasource.username", dotenv.get("DATABASE_USERNAME"));
 		System.setProperty("spring.datasource.password", dotenv.get("DATABASE_PASSWORD"));
+		System.setProperty("backend.url", dotenv.get("BACKEND_URL"));
 
 		SpringApplication.run(SavannahNixonPhotographyApplication.class, args);
 	}

@@ -22,6 +22,10 @@ public class ShootingCategoryCreateDto {
   @Schema(description = "Additional information about the shooting category")
   private String info;
 
-  @Schema(description = "Parent category of the shooting category")
+  @Schema(description = "Parent category id of the shooting category")
   private String parentCategoryId;
+
+  @Schema(description = "Image id of the shooting category", nullable = false)
+  @NotNull
+  private String imageId;
 }

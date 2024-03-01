@@ -1,4 +1,4 @@
-package de.savannahnixon.backend.app;
+package de.savannahnixon.backend.app.configs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
@@ -15,4 +15,5 @@ public class OpenApiDefinition {
 
   public static final String SHOOTING_CATEGORIES = "Shooting Categories";
   public static final String SHOOTING_PACKAGES = "Shooting Packages";
+  public static final String IMAGES = "Images";
 }

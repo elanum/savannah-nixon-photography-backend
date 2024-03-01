@@ -1,6 +1,6 @@
 package de.savannahnixon.backend.app.controllers;
 
-import static de.savannahnixon.backend.app.OpenApiDefinition.SHOOTING_CATEGORIES;
+import static de.savannahnixon.backend.app.configs.OpenApiDefinition.SHOOTING_CATEGORIES;
 
 import java.util.List;
 import java.util.Optional;
@@ -81,10 +81,15 @@ public class ShootingCategoryController {
 
   @GetMapping("/{slug}")
   @ResponseBody
-  public ShootingCategoryDto getShootingCategoryBySlug(
+  public ResponseEntity<ShootingCategoryDto> getShootingCategoryBySlug(
       @PathVariable(value = "slug") final String slug) {
-    final ShootingCategoryEntity shootingCategoryEntity = shootingCategoryRepository.findBySlug(slug);
+    final Optional<ShootingCategoryEntity> shootingCategoryEntity = shootingCategoryRepository.findBySlug(slug);
 
-    return modelMapper.map(shootingCategoryEntity, ShootingCategoryDto.class);
+    if (!shootingCategoryEntity.isPresent()) {
+      return ResponseEntity.notFound().build();
+    }
+
+    return ResponseEntity.ok().body(modelMapper.map(shootingCategoryEntity, ShootingCategoryDto.class));
+
   }
 }

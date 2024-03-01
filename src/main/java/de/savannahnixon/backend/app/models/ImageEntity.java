@@ -1,18 +1,15 @@
 package de.savannahnixon.backend.app.models;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -24,20 +21,23 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "shooting_package_services")
-public class ShootingPackageServiceEntity extends BaseEntity {
+@Builder
+@Table(name = "images")
+public class ImageEntity extends BaseEntity {
   @Column(nullable = false)
-  private String title;
+  private String filename;
 
   @Column(nullable = false)
-  private Float price;
+  private String type;
 
-  @ElementCollection(targetClass = ShootingPackageServiceInfoEntity.class)
-  @CollectionTable(name = "shooting_package_service_info", joinColumns = @JoinColumn(name = "shooting_package_service_id"))
-  private List<ShootingPackageServiceInfoEntity> info;
+  @Transient
+  private String src;
+
+  @Column(nullable = false)
+  private String alt;
 
   @JsonBackReference
-  @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "shooting_package_id")
+  @ManyToOne
+  @JoinColumn(name = "package_id")
   private ShootingPackageEntity shootingPackage;
 }

@@ -27,4 +27,11 @@ public class ShootingPackageCreateDto {
 
   @Schema(description = "Additional information about the shooting package")
   private String info;
+
+  @Schema(description = "Is the shooting package disabled", defaultValue = "false", nullable = false)
+  @NotNull
+  private Boolean disabled;
+
+  @Schema(description = "List of image ids", defaultValue = "[]", nullable = false)
+  private List<String> imageIds = new ArrayList<>();
 }
