@@ -13,22 +13,22 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@Schema
+@Schema(description = "Dto for a shooting category")
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShootingCategoryDto extends BaseDto {
-  @Schema(description = "Title of the shooting category", nullable = false)
+  @Schema(description = "Title of the shooting category", nullable = false, example = "Fantasy Shootings")
   @NotNull
   private String title;
 
-  @Schema(description = "Description of the shooting category", nullable = false)
+  @Schema(description = "Description of the shooting category", nullable = false, example = "Fantasy shootings are a special kind of shootings")
   @NotNull
   private String description;
 
-  @Schema(description = "Additional information about the shooting category")
+  @Schema(description = "Additional information about the shooting category", example = "Some additional information about the fantasy shootings")
   private String info;
 
-  @Schema(description = "Slug of the shooting category", nullable = false)
+  @Schema(description = "Slug of the shooting category", nullable = false, example = "fantasy-shootings")
   @NotNull
   private String slug;
 
@@ -40,7 +40,7 @@ public class ShootingCategoryDto extends BaseDto {
   @NotNull
   private List<ShootingCategoryDto> shootingCategories;
 
-  @Schema(nullable = false)
+  @Schema(nullable = false, description = "Image of the shooting category")
   @NotNull
   private ImageDto image;
 }

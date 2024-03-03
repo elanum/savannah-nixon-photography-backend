@@ -23,7 +23,12 @@ import de.savannahnixon.backend.app.dtos.ImageDto;
 import de.savannahnixon.backend.app.models.ImageEntity;
 import de.savannahnixon.backend.app.repositories.ImageRepository;
 import de.savannahnixon.backend.app.services.ImageService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = IMAGES)
@@ -39,8 +44,10 @@ public class ImageController {
   @Autowired
   private ImageService imageService;
 
-  @GetMapping
-  @ResponseBody
+  @Operation(summary = "Get all images", description = "Get all images", responses = {
+      @ApiResponse(responseCode = "200", description = "All images", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ImageDto.class)))),
+  })
+  @GetMapping()
   public ResponseEntity<List<ImageDto>> getAllImages() {
     try {
       final List<ImageEntity> images = imageRepository.findAll();
@@ -53,8 +60,10 @@ public class ImageController {
     }
   }
 
+  @Operation(summary = "Upload an image", description = "Upload an image", responses = {
+      @ApiResponse(responseCode = "200", description = "All images", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ImageDto.class))),
+  })
   @PostMapping(consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
-  @ResponseBody
   @RequestBody(required = true)
   public ResponseEntity<ImageDto> uploadImage(@RequestPart(required = true) MultipartFile file) {
     try {

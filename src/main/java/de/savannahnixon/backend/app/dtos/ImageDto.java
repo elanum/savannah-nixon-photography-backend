@@ -13,19 +13,19 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@Schema
+@Schema(description = "Dto for the image entity")
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImageDto extends BaseDto {
-  @Schema(description = "Filename of the image", nullable = false)
+  @Schema(description = "Filename of the image", nullable = false, example = "image.jpg")
   @NotNull
   private String filename;
 
-  @Schema(description = "Type of the image", nullable = false)
+  @Schema(description = "Type of the image", nullable = false, example = "image/jpg")
   @NotNull
   private String type;
 
-  @Schema(description = "Alt text of the image", nullable = false)
+  @Schema(description = "Alt text of the image", nullable = false, example = "This is an image")
   @NotNull
   private String alt;
 

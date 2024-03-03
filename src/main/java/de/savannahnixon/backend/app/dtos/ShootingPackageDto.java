@@ -14,22 +14,22 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-@Schema
+@Schema(description = "Dto for a shooting package")
 @EqualsAndHashCode(callSuper = true)
 public class ShootingPackageDto extends BaseDto {
-  @Schema(description = "Title of the shooting package", nullable = false)
+  @Schema(description = "Title of the shooting package", nullable = false, example = "Fantasy Shooting")
   @NotNull
   private String title;
 
-  @Schema(description = "Slug of the shooting package", nullable = false)
+  @Schema(description = "Slug of the shooting package", nullable = false, example = "fantasy-shooting")
   @NotNull
   private String slug;
 
-  @Schema(description = "Description of the shooting package", nullable = false)
+  @Schema(description = "Description of the shooting package", nullable = false, example = "Fantasy shootings are a special kind of shootings")
   @NotNull
   private String description;
 
-  @Schema(description = "Additional information about the shooting package")
+  @Schema(description = "Additional information about the shooting package", example = "Some additional information about the fantasy shootings")
   private String info;
 
   @Schema(description = "Is the shooting package disabled", defaultValue = "false", nullable = false)

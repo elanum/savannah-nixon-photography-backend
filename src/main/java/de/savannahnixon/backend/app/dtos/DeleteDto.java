@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Schema
+@Schema(description = "Dto for the deletion of an entity")
 @Builder
 public class DeleteDto {
   @Schema(description = "Id of the deleted entity", nullable = false)

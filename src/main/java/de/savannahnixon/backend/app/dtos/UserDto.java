@@ -13,11 +13,11 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@Schema
+@Schema(description = "Dto for a user")
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto extends BaseDto {
-  @Schema(description = "Username of the user", nullable = false)
+  @Schema(description = "Username of the user", nullable = false, example = "user")
   @NotNull
   private String username;
 
