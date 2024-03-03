@@ -47,4 +47,8 @@ public class ShootingPackageDto extends BaseDto {
   @Schema(description = "List of images", defaultValue = "[]", nullable = false)
   @NotNull
   private List<ImageDto> images;
+
+  @Schema(description = "Cover image of the shooting package", nullable = false)
+  @NotNull
+  private ImageDto coverImage;
 }

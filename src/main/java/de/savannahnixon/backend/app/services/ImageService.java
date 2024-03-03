@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,7 +33,7 @@ public class ImageService {
   @Value("${backend.url}")
   private String backendUrl;
 
-  private final String uploadPath = "./files/images";
+  private final String uploadPath = "files/images";
 
   private String getFilename(MultipartFile multipartFile) {
     final Slugify slg = Slugify.builder().build();
@@ -90,11 +89,11 @@ public class ImageService {
     try (FileOutputStream fos = new FileOutputStream(filePath.toFile())) {
       fos.write(file.getBytes());
     }
-    URI publicUri = new URI(backendUrl + '/' + uniqueFileName);
+
+    System.out.println(filePath);
 
     ImageDto imageDto = new ImageDto();
     imageDto.setAlt(file.getName());
-    imageDto.setSrc(publicUri.toString());
     imageDto.setType(file.getContentType());
     imageDto.setFilename(uniqueFileName);
 
@@ -116,6 +115,8 @@ public class ImageService {
     if (!filePath.toFile().exists()) {
       throw new RuntimeException("Imagepath " + filePath + " does not exists");
     }
+
+    System.out.println(filePath);
 
     if (!filePath.toFile().delete()) {
       throw new RuntimeException("Could not delete the file");

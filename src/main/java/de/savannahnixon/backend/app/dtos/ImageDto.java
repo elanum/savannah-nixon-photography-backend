@@ -25,10 +25,6 @@ public class ImageDto extends BaseDto {
   @NotNull
   private String type;
 
-  @Schema(description = "Source of the image", nullable = false)
-  @NotNull
-  private String src;
-
   @Schema(description = "Alt text of the image", nullable = false)
   @NotNull
   private String alt;
