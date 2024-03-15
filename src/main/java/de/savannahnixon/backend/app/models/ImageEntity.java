@@ -34,6 +34,6 @@ public class ImageEntity extends BaseEntity {
 
   @JsonBackReference
   @ManyToOne
-  @JoinColumn(name = "package_id")
-  private ShootingPackageEntity shootingPackage;
+  @JoinColumn(name = "shooting_id")
+  private ShootingEntity shooting;
 }

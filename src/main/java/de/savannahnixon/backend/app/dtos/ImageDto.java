@@ -31,5 +31,5 @@ public class ImageDto extends BaseDto {
 
   @Schema(hidden = true)
   @JsonIgnore
-  private ShootingPackageDto shootingPackage;
+  private ShootingDto shooting;
 }

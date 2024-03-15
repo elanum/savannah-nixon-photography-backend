@@ -1,18 +1,20 @@
 package de.savannahnixon.backend.app.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.savannahnixon.backend.app.dtos.UserDto;
-import de.savannahnixon.backend.app.models.UserEntity;
-import de.savannahnixon.backend.app.repositories.UserRepository;
+import de.savannahnixon.backend.app.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "User")
@@ -20,18 +22,19 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping(path = "/users")
 public class UserController {
   @Autowired
-  private UserRepository userRepository;
-
-  @Autowired
-  private ModelMapper modelMapper;
+  private UserService userService;
 
   @GetMapping
-  @ResponseBody
-  public List<UserDto> getAllUsers() {
-    final List<UserEntity> userEntity = userRepository.findAll();
+  @Operation(summary = "Fetches all users", description = "Fetches all users", responses = {
+      @ApiResponse(responseCode = "200", description = "All Users", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = UserDto.class))))
+  })
+  public ResponseEntity<List<UserDto>> getUsers() {
+    try {
+      final List<UserDto> users = userService.getUsers();
 
-    return userEntity.stream()
-        .map(user -> modelMapper.map(user, UserDto.class))
-        .collect(Collectors.toList());
+      return ResponseEntity.ok().body(users);
+    } catch (Exception e) {
+      return ResponseEntity.internalServerError().build();
+    }
   }
 }

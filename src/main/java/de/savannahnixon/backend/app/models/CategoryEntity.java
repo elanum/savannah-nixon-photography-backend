@@ -23,8 +23,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "shooting_categories")
-public class ShootingCategoryEntity extends BaseEntity {
+@Table(name = "categories")
+public class CategoryEntity extends BaseEntity {
   @Column(nullable = false)
   private String title;
 
@@ -38,16 +38,16 @@ public class ShootingCategoryEntity extends BaseEntity {
   private String slug;
 
   @JsonManagedReference
-  @OneToMany(mappedBy = "shootingCategory")
-  private List<ShootingPackageEntity> shootingPackages;
+  @OneToMany(mappedBy = "category")
+  private List<ShootingEntity> shootings;
 
   @JsonManagedReference
   @OneToMany(mappedBy = "parentCategory")
-  private List<ShootingCategoryEntity> shootingCategories;
+  private List<CategoryEntity> categories;
 
   @JsonBackReference
   @ManyToOne
-  private ShootingCategoryEntity parentCategory;
+  private CategoryEntity parentCategory;
 
   @OneToOne
   private ImageEntity image;
