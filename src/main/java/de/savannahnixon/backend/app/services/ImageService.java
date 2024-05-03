@@ -1,8 +1,5 @@
 package de.savannahnixon.backend.app.services;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,8 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.imageio.ImageIO;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -33,9 +28,6 @@ import de.savannahnixon.backend.app.repositories.ImageRepository;
 
 @Service
 public class ImageService {
-  private static final int MAX_WIDTH = 800;
-  private static final int MAX_HEIGHT = 600;
-
   @Autowired
   private ImageRepository imageRepository;
 
@@ -63,37 +55,6 @@ public class ImageService {
       }
     }
     return originalFilename;
-  }
-
-  private void compressAndSaveImage(MultipartFile file, FileOutputStream fos) throws IOException {
-    BufferedImage originalImage = ImageIO.read(file.getInputStream());
-
-    int width = originalImage.getWidth();
-    int height = originalImage.getHeight();
-
-    if (width > MAX_WIDTH || height > MAX_HEIGHT) {
-      float aspectRatio = (float) width / height;
-
-      if (width > MAX_WIDTH) {
-        width = MAX_WIDTH;
-        height = Math.round(MAX_WIDTH / aspectRatio);
-      }
-
-      if (height > MAX_HEIGHT) {
-        height = MAX_HEIGHT;
-        width = Math.round(MAX_HEIGHT * aspectRatio);
-      }
-
-      Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-      BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-      Graphics2D g2d = resizedImage.createGraphics();
-      g2d.drawImage(scaledImage, 0, 0, null);
-      g2d.dispose();
-
-      ImageIO.write(resizedImage, "jpg", fos);
-    } else {
-      fos.write(file.getBytes());
-    }
   }
 
   private String getUniqueFilename(String filename, File folder) {
@@ -137,7 +98,7 @@ public class ImageService {
     Path filePath = Path.of(staticFolder.getAbsolutePath(), uniqueFileName);
 
     try (FileOutputStream fos = new FileOutputStream(filePath.toFile())) {
-      compressAndSaveImage(file, fos);
+      fos.write(file.getBytes());
     }
 
     ImageDto imageDto = new ImageDto();
@@ -174,17 +135,19 @@ public class ImageService {
   public List<ImageDto> getImages() {
     final List<ImageEntity> images = imageRepository.findAll();
 
-    List<ImageDto> imageList = images.stream()
+    return images.stream()
         .map(image -> modelMapper.map(image, ImageDto.class))
         .collect(Collectors.toList());
+  }
 
-    Collections.sort(imageList, (a, b) -> {
+  public List<ImageDto> sortImages(List<ImageDto> images) {
+    Collections.sort(images, (a, b) -> {
       Integer orderA = a.getOrder() != null ? a.getOrder() : 0;
       Integer orderB = b.getOrder() != null ? b.getOrder() : 0;
 
       return orderA.compareTo(orderB);
     });
 
-    return imageList;
+    return images;
   }
 };

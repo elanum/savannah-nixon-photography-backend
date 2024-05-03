@@ -10,6 +10,6 @@ public class ShootingPackageDetailEntity {
   @Column(nullable = false)
   private String info;
 
-  @Column(nullable = false)
-  private Integer info_order;
+  @Column(nullable = false, name = "info_order")
+  private Integer order;
 }

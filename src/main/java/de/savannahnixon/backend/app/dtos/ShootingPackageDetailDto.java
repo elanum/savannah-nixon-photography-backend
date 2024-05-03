@@ -13,5 +13,5 @@ public class ShootingPackageDetailDto {
 
   @Schema(nullable = false, description = "Order of the shooting package detail", example = "1")
   @NotNull
-  private Integer detail_order;
+  private Integer order;
 }

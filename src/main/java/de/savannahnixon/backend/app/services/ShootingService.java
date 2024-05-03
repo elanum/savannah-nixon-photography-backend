@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.savannahnixon.backend.app.dtos.DeleteDto;
+import de.savannahnixon.backend.app.dtos.ImageDto;
 import de.savannahnixon.backend.app.dtos.ShootingCreateDto;
 import de.savannahnixon.backend.app.dtos.ShootingDto;
 import de.savannahnixon.backend.app.models.CategoryEntity;
@@ -34,19 +35,31 @@ public class ShootingService {
   @Autowired
   private ModelMapper modelMapper;
 
+  @Autowired
+  private ImageService imageService;
+
+  private ShootingDto convertToDto(ShootingEntity shooting) {
+    ShootingDto shootingDto = modelMapper.map(shooting, ShootingDto.class);
+    List<ImageDto> images = imageService.sortImages(shootingDto.getImages());
+
+    shootingDto.setImages(images);
+
+    return shootingDto;
+  }
+
   public List<ShootingDto> getShooting(final List<String> slugs) {
     if (slugs != null && !slugs.isEmpty()) {
       final List<ShootingEntity> shootingEntity = shootingRepository.findBySlugIn(slugs);
 
       return shootingEntity.stream()
-          .map(shootingPackage -> modelMapper.map(shootingPackage, ShootingDto.class))
+          .map(shootingPackage -> convertToDto(shootingPackage))
           .collect(Collectors.toList());
     }
 
     final List<ShootingEntity> shootingEntity = shootingRepository.findAll();
 
     return shootingEntity.stream()
-        .map(shootingPackage -> modelMapper.map(shootingPackage, ShootingDto.class))
+        .map(shootingPackage -> convertToDto(shootingPackage))
         .collect(Collectors.toList());
   }
 
@@ -79,7 +92,7 @@ public class ShootingService {
 
     shooting = shootingRepository.save(shooting);
 
-    return modelMapper.map(shooting, ShootingDto.class);
+    return convertToDto(shooting);
   }
 
   public DeleteDto deleteShooting(final String id) {
@@ -97,12 +110,12 @@ public class ShootingService {
   public ShootingDto getShootingById(final String id) {
     final ShootingEntity shooting = shootingRepository.findById(id).orElseThrow();
 
-    return modelMapper.map(shooting, ShootingDto.class);
+    return convertToDto(shooting);
   }
 
   public ShootingDto getShootingBySlug(final String slug) {
     final ShootingEntity shooting = shootingRepository.findBySlug(slug).orElseThrow();
 
-    return modelMapper.map(shooting, ShootingDto.class);
+    return convertToDto(shooting);
   }
 }

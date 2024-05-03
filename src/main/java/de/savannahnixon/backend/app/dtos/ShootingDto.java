@@ -38,9 +38,9 @@ public class ShootingDto extends BaseDto {
   @NotNull
   private Boolean disabled;
 
-  @Schema(description = "List of shooting services", nullable = false)
+  @Schema(description = "List of shooting packages", nullable = false)
   @NotNull
-  private List<ShootingPackageDto> services;
+  private List<ShootingPackageDto> shootingPackages;
 
   @Schema(hidden = true)
   @JsonIgnore
