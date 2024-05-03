@@ -22,9 +22,6 @@ public class CategoryCreateDto {
   @Schema(description = "Additional information about the category", example = "Some additional information about the fantasy shootings")
   private String info;
 
-  @Schema(description = "Parent category id of the category", format = "uuid", example = "123e4567-e89b-12d3-a456-426614174000")
-  private String parentCategoryId;
-
   @Schema(description = "Image id of the category", nullable = false, format = "uuid", example = "123e4567-e89b-12d3-a456-426614174000")
   @NotNull
   private String imageId;

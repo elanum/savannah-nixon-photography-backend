@@ -24,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "shooting_package")
+@Table(name = "shooting_packages")
 public class ShootingPackageEntity extends BaseEntity {
   @Column(nullable = false)
   private String title;

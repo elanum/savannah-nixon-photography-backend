@@ -29,6 +29,9 @@ public class ImageDto extends BaseDto {
   @NotNull
   private String alt;
 
+  @Schema(description = "Order of the image", example = "1")
+  private Integer order;
+
   @Schema(hidden = true)
   @JsonIgnore
   private ShootingDto shooting;

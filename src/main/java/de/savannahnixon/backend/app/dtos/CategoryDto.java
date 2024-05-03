@@ -2,8 +2,6 @@ package de.savannahnixon.backend.app.dtos;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -38,22 +36,7 @@ public class CategoryDto extends BaseDto {
   @NotNull
   private List<ShootingDto> shootings;
 
-  @Schema(description = "List of sub categories", nullable = false)
-  @NotNull
-  private List<CategoryDto> categories;
-
   @Schema(nullable = false, description = "Image of the category")
   @NotNull
   private ImageDto image;
-
-  @Schema(hidden = true)
-  @JsonIgnore
-  private CategoryDto parentCategory;
-
-  @Schema
-  private String parentCategoryId;
-
-  public String getParentCategoryId() {
-    return parentCategory != null ? parentCategory.getId() : null;
-  }
 }

@@ -32,6 +32,9 @@ public class ImageEntity extends BaseEntity {
   @Column(nullable = false)
   private String alt;
 
+  @Column(name = "image_order")
+  private Integer order;
+
   @JsonBackReference
   @ManyToOne
   @JoinColumn(name = "shooting_id")

@@ -50,15 +50,6 @@ public class CategoryService {
     modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
     CategoryEntity category = modelMapper.map(categoryDto, CategoryEntity.class);
 
-    if (categoryDto.getParentCategoryId() != null) {
-      final Optional<CategoryEntity> parentCategory = categoryRepository
-          .findById(categoryDto.getParentCategoryId());
-
-      if (parentCategory.isPresent()) {
-        category.setParentCategory(parentCategory.get());
-      }
-    }
-
     if (categoryDto.getImageId() != null) {
       final Optional<ImageEntity> image = imageRepository.findById(categoryDto.getImageId());
 

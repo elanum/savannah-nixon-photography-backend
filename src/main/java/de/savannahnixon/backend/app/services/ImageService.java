@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -173,8 +174,17 @@ public class ImageService {
   public List<ImageDto> getImages() {
     final List<ImageEntity> images = imageRepository.findAll();
 
-    return images.stream()
+    List<ImageDto> imageList = images.stream()
         .map(image -> modelMapper.map(image, ImageDto.class))
         .collect(Collectors.toList());
+
+    Collections.sort(imageList, (a, b) -> {
+      Integer orderA = a.getOrder() != null ? a.getOrder() : 0;
+      Integer orderB = b.getOrder() != null ? b.getOrder() : 0;
+
+      return orderA.compareTo(orderB);
+    });
+
+    return imageList;
   }
 };
